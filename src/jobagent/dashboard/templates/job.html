@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }}{% endblock %}
+{% block content %}
+<p class="small"><a href="/">← todas as vagas</a></p>
+
+<section class="card">
+  <div class="actions" style="justify-content: space-between">
+    <div>
+      <h1>{{ job.title }}</h1>
+      <div class="muted">{{ job.company }} · {{ job.location or "—" }} · {{ job.modality }} · nível {{ job.seniority }}
+        · publicada {{ job.posted_at.strftime("%d/%m/%Y") if job.posted_at else "—" }}</div>
+      <div class="small" style="margin-top:6px">
+        <a href="{{ job.url }}" target="_blank" rel="noopener noreferrer">Vaga original ↗</a>
+        · candidatura: {{ job.apply_type }} · fonte: {{ job.source }}
+      </div>
+    </div>
+    <div style="text-align:right">
+      <span class="score {{ band_class(job.score) }}" style="font-size:22px">{{ job.score }}</span>
+      <div class="small muted">{{ job.score_band }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="card cta">
+  <div><b>Candidatura</b>
+    <div class="small muted">{% if job.status == "READY_TO_APPLY" %}Aprovada: abra o formulário e envie.{% elif job.status in ("APPLIED", "INTERVIEW", "OFFER") %}Enviada.{% else %}Revise currículo e respostas e aprove antes de se candidatar.{% endif %}</div></div>
+  <a class="btn" href="/jobs/{{ job.id }}/apply">Revisar e aprovar candidatura →</a>
+</section>
+
+<div class="grid2">
+  <div>
+    <div class="grid3">
+      {% for title, key, cls in [("MATCH", "match", "match"), ("GAPS", "gaps", "gaps"), ("RISKS", "risks", "risks")] %}
+      <section class="card {{ cls }}">
+        <h2>{{ title }} ({{ (a.get(key) or [])|length }})</h2>
+        <ul class="items">{% for x in a.get(key) or [] %}<li>{{ x }}</li>{% else %}<li class="muted">—</li>{% endfor %}</ul>
+      </section>
+      {% endfor %}
+    </div>
+
+    <section class="card">
+      <h2>Composição do score</h2>
+      <table class="kv">
+        {% for k, c in (a.get("breakdown") or {}).items() %}
+        <tr><td>{{ k }}</td><td style="width:120px"><div class="bar"><span style="width: {{ (100 * c.points / c.max)|round|int if c.max else 0 }}%"></span></div></td>
+            <td style="white-space:nowrap">{{ "%.1f"|format(c.points) }}/{{ c.max|int }}</td><td class="muted">{{ c.detail }}</td></tr>
+        {% endfor %}
+        {% for pen in a.get("penalties") or [] %}<tr><td>penalidade</td><td></td><td colspan="2" class="muted">{{ pen }}</td></tr>{% endfor %}
+      </table>
+    </section>
+
+    {% if p.get("requirements_text") or p.get("desired_text") %}
+    <section class="card">
+      <h2>Requisitos extraídos</h2>
+      {% if p.get("requirements_text") %}<pre class="desc">{{ p.requirements_text }}</pre>{% endif %}
+      {% if p.get("desired_text") %}<h2 style="margin-top:12px">Desejáveis</h2><pre class="desc">{{ p.desired_text }}</pre>{% endif %}
+      <p class="small muted">Tecnologias: {{ (p.get("technologies") or [])|join(", ") or "—" }}</p>
+    </section>
+    {% endif %}
+
+    <section class="card">
+      <details><summary><b>Descrição completa</b></summary><pre class="desc" style="margin-top:10px">{{ job.description }}</pre></details>
+    </section>
+  </div>
+
+  <div>
+    <section class="card" id="status-panel" hx-get="/jobs/{{ job.id }}/status-panel" hx-trigger="statusChanged from:body">
+      {% include "_status.html" %}
+    </section>
+
+    <section class="card" id="resumes">{% include "_resumes.html" %}</section>
+
+    <section class="card">
+      <h2>Notas</h2>
+      <form hx-post="/jobs/{{ job.id }}/notes" hx-target="#notes-msg">
+        <textarea name="notes" placeholder="Contato, impressões, próximos passos...">{{ job.notes or "" }}</textarea>
+        <div class="actions" style="margin-top:6px"><button type="submit" class="secondary">Salvar notas</button><span id="notes-msg"></span></div>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

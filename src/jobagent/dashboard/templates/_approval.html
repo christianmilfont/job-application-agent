@@ -1,0 +1,53 @@
+{% if job.status in ("APPLIED", "INTERVIEW", "OFFER") %}
+<h2>Candidatura registrada</h2>
+<p><span class="status s-{{ job.status }}">{{ STATUS_LABELS[job.status] }}</span></p>
+<p class="small muted">Acompanhe entrevistas e propostas pela <a href="/jobs/{{ job.id }}">página da vaga</a>.</p>
+
+{% elif approval %}
+<h2>Aprovada ✓</h2>
+<p class="small muted">Aprovada em {{ approval.approved_at.strftime("%d/%m/%Y %H:%M") }}{% if approval.note %} · {{ approval.note }}{% endif %}.
+  Vale para este currículo e estas respostas; qualquer edição revoga a aprovação.</p>
+{% if problems %}<div class="error"><ul class="items">{% for p in problems %}<li>{{ p }}</li>{% endfor %}</ul></div>{% endif %}
+<div class="actions" style="margin:10px 0">
+  <a class="btn" href="{{ job.apply_url or job.url }}" target="_blank" rel="noopener noreferrer">Abrir formulário de candidatura ↗</a>
+  {% if resume %}<a class="btn secondary" href="/resumes/{{ resume.id }}/resume.pdf" target="_blank">PDF</a>
+  <a class="btn secondary" href="/resumes/{{ resume.id }}/answers.md" target="_blank">Respostas</a>{% endif %}
+</div>
+<p class="small muted">Você envia no site da empresa: anexe o PDF e cole as respostas (botões "Copiar").
+  {% if mode != "ASSISTED" %}Modo {{ mode }}: nenhuma automação de navegador.{% endif %}</p>
+<form hx-post="/jobs/{{ job.id }}/applied" hx-target="#approval" style="margin-top:12px">
+  <label class="small"><input type="checkbox" name="confirm" value="1"> Confirmo que eu mesmo enviei a candidatura</label>
+  <div class="actions" style="margin-top:6px"><button type="submit">Marcar como enviada</button></div>
+</form>
+<form hx-post="/jobs/{{ job.id }}/revoke" hx-target="#approval" hx-confirm="Revogar a aprovação?" style="margin-top:10px">
+  <button type="submit" class="secondary">Revogar aprovação</button>
+</form>
+
+{% else %}
+<h2>Checklist</h2>
+<ul class="checklist">
+  {% for c in checks %}
+  <li class="{{ 'done' if c.ok else 'todo' }}">{{ "✓" if c.ok else "○" }} {{ c.label }}{% if c.detail %} <span class="small muted">— {{ c.detail }}</span>{% endif %}</li>
+  {% endfor %}
+</ul>
+{% if resume %}
+<p class="small"><a href="/resumes/{{ resume.id }}/resume.pdf" target="_blank">Abrir currículo (PDF)</a> ·
+  <a href="/resumes/{{ resume.id }}/analysis.md" target="_blank">análise e ATS {{ resume.ats_score }}%</a></p>
+{% else %}
+<p class="small"><a href="/jobs/{{ job.id }}">Gere o currículo na página da vaga →</a></p>
+{% endif %}
+
+{% if a.get("risks") %}
+<div class="risks"><h2 style="margin-top:12px">RISKS</h2>
+  <ul class="items small">{% for r in a.risks %}<li>{{ r }}</li>{% endfor %}</ul></div>
+{% endif %}
+
+{% if problems %}<div class="error"><b>Ainda não dá para aprovar:</b><ul class="items">{% for p in problems %}<li>{{ p }}</li>{% endfor %}</ul></div>{% endif %}
+
+<form hx-post="/jobs/{{ job.id }}/approve" hx-target="#approval" style="margin-top:12px">
+  <label class="small" style="display:block"><input type="checkbox" name="resume_reviewed" value="1"> Revisei o currículo e tudo nele é verdadeiro</label>
+  {% if a.get("risks") %}<label class="small" style="display:block"><input type="checkbox" name="risks_ack" value="1"> Li os riscos e quero me candidatar mesmo assim</label>{% endif %}
+  <input name="note" placeholder="nota (opcional)" style="width:100%; margin-top:6px">
+  <div class="actions" style="margin-top:8px"><button type="submit">Aprovar candidatura</button></div>
+</form>
+{% endif %}

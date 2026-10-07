@@ -1,0 +1,231 @@
+# =============================================================================
+# PERFIL PROFISSIONAL — FONTE ÚNICA DA VERDADE
+# =============================================================================
+# Tudo o que o sistema afirma sobre você (score, currículo, ATS, respostas) sai daqui.
+# O LLM NÃO cria o currículo: ele escolhe e reordena o que está aqui para cada vaga.
+# Um validador bloqueia qualquer tecnologia, certificação, número ou experiência
+# que não esteja neste arquivo.
+#
+# Regras de edição:
+# - Só escreva fatos. Se não tem certeza, deixe em branco ou marque TODO.
+# - Projetos: "stack" e "highlights" são o que pode ser citado. "planned" = ainda NÃO
+#   implementado; o currículo só pode mencionar como planejado/em evolução.
+# - Depois de editar: `jobagent profile` (valida) e `jobagent rescore`.
+# =============================================================================
+
+personal:
+  name: "Christian Milfont"
+  headline: "Cloud, DevOps, IA/GenAI e Desenvolvimento"
+  location: "São Paulo/SP"
+  email: "christian@milfont.org"        # TODO: aparece só no currículo final; nunca é enviado ao LLM
+  phone: "(85) 98191-3769"        # TODO: idem
+  links:
+    github: "https://github.com/christianmilfont"
+    linkedin: "https://linkedin.com/in/christianmilfont"
+
+# Nível alvo. Não há experiência profissional registrada; o score favorece estes níveis.
+target_seniority: [junior, pleno, trainee]
+
+education:
+  - id: ads_fiap
+    degree: "Análise e Desenvolvimento de Sistemas"
+    institution: "FIAP"
+    level: graduacao
+    status: completed
+  - id: postech_fiap
+    degree: "Pós Tech em DevOps e Arquitetura Cloud"
+    institution: "FIAP"
+    level: pos_graduacao
+    status: in_progress
+
+certifications:
+  - id: gcp_genai_leader
+    name: "Google Cloud Generative AI Leader"
+    issuer: "Google Cloud"
+    kind: certification
+    skills: [gcp, genai]
+  - id: az_104
+    name: "Microsoft Azure Administrator (AZ-104)"
+    issuer: "Microsoft"
+    kind: certification
+    skills: [azure]
+  - id: aws_restart
+    name: "AWS re/Start"
+    issuer: "AWS"
+    kind: training          # programa de formação, não é certificação de exame
+    skills: [aws]
+  - id: dynatrace_essentials
+    name: "Dynatrace Essentials"
+    issuer: "Dynatrace"
+    kind: certification
+    skills: [dynatrace, observability]
+
+achievements:
+  - id: postech_champion
+    text: "Campeão do Pós Tech FIAP em DevOps e Arquitetura Cloud, recebendo o Shape da FIAP após competição baseada no conteúdo técnico do curso."
+    skills: [devops, cloud_architecture]
+
+# Experiência profissional: vazio = nenhuma informada. NÃO preencha com nada que não seja real.
+# Enquanto vazio, o validador proíbe frases como "experiência profissional", "atuei como",
+# "anos de experiência", "liderei", "em produção".
+experience: []
+
+projects:
+  - id: togglemaster
+    name: "ToggleMaster"
+    context: ""            # TODO: acadêmico (Pós Tech)? pessoal?
+    status: unknown        # completed | in_progress | unknown
+    link: ""               # TODO
+    summary: "Plataforma/laboratório de Feature Flags e observabilidade."
+    stack:
+      - "Flask"
+      - "PostgreSQL"
+      - "Docker (ambiente multi-container)"
+      - "OpenTelemetry"
+      - "Jaeger"
+      - "AWS"
+      - "EKS/Kubernetes"
+      - "Terraform (Infrastructure as Code)"
+      - "GitHub Actions (CI/CD)"
+      - "Istio (deployment canary)"
+      - "ECR"
+      - "RDS"
+      - "Redis"
+      - "DynamoDB"
+      - "SQS"
+      - "ArgoCD"
+      - "Kyverno"
+      - "Checkov"
+      - "VPC"
+    highlights:
+      - "Plataforma de Feature Flags com Flask e PostgreSQL, em ambiente multi-container com Docker."
+      - "Observabilidade com OpenTelemetry e Jaeger."
+      - "Infraestrutura na AWS provisionada com Terraform (Infrastructure as Code): VPC, workloads em Kubernetes (EKS) e serviços gerenciados (ECR, RDS, Redis, DynamoDB e SQS)."
+      - "GitHub Actions para CI/CD e ArgoCD."
+      - "Istio para estratégia de deployment canary."
+      - "Kyverno; Checkov para análise de segurança da infraestrutura."
+    planned: []
+
+  - id: skillbridge
+    name: "SkillBridge"
+    context: ""            # TODO
+    status: unknown
+    link: ""
+    summary: "Plataforma de requalificação profissional que conecta cursos, microtarefas e oportunidades profissionais com base em competências."
+    stack:
+      - "ASP.NET Core 8"
+      - "MySQL"
+      - "JWT"
+      - "OpenTelemetry"
+      - "Azure Application Insights"
+      - "Expo"
+    highlights:
+      - "Plataforma que conecta cursos, microtarefas e oportunidades profissionais com base em competências."
+      - "ASP.NET Core 8, MySQL e JWT."
+      - "Observabilidade com OpenTelemetry e Azure Application Insights."
+      - "Expo."
+      - "Projeto com foco em arquitetura de aplicações e observabilidade."
+    planned: []
+
+  - id: barberhub
+    name: "BarberHub"
+    context: ""            # TODO
+    status: unknown
+    link: ""
+    summary: "Sistema para gestão e localização de serviços de barbearia."
+    stack:
+      - "Java 17"
+      - "Spring Boot"
+      - "MySQL/H2"
+      - "Spring AI (ChatClient)"
+      - "Leaflet"
+      - "Haversine"
+    highlights:
+      - "Sistema de gestão e localização de barbearias com Java 17 e Spring Boot, usando MySQL/H2."
+      - "Integração de IA com Spring AI (ChatClient)."
+      - "Mapa com Leaflet e cálculo de distância com a fórmula de Haversine."
+    planned: []
+
+  - id: celeste
+    name: "Celeste Local Assistant"
+    context: "pessoal"
+    status: in_progress
+    link: ""
+    summary: "Projeto pessoal de assistente de IA, em evolução."
+    stack:
+      - "Assistente de IA"
+      - "Interface por voz"
+      - "Automação de tarefas"
+    highlights:
+      - "Assistente de IA pessoal com interação por voz."
+      - "Automação de tarefas."
+      - "Arquitetura pensada para futuras integrações com dispositivos e automação residencial."
+    planned:
+      - text: "Integração com WhatsApp, com conversão de mensagens em áudio e resposta por voz."
+        keywords: [whatsapp]
+      - text: "Integrações com dispositivos e automação residencial."
+        keywords: [automação residencial, home automation, dispositivos, iot, casa inteligente, smart home]
+
+  - id: genai_lab
+    name: "GenAI Learning Lab"
+    context: "pessoal"
+    status: in_progress
+    link: ""
+    summary: "Laboratório pessoal de estudos e desenvolvimento de aplicações com IA generativa."
+    stack:
+      - "IA generativa"
+      - "MCP"
+      - "RAG"
+      - "Fine-tuning"
+    highlights:
+      - "Estudos e desenvolvimento de aplicações com IA generativa."
+      - "Experimentos com MCP (Model Context Protocol), RAG e fine-tuning."
+      - "Experimentação de aplicações e frameworks de GenAI."
+    planned: []
+
+# Competências declaradas (IDs de config/skills_taxonomy.yaml).
+# A evidência de projeto e certificação é calculada automaticamente a partir das seções
+# acima; aqui fica o que você declarou além disso.
+#   declared = você listou; academic = formação; professional = experiência profissional
+skills:
+  aws:                { evidence: [declared] }
+  azure:              { evidence: [declared] }
+  gcp:                { evidence: [declared] }
+  docker:             { evidence: [declared] }
+  kubernetes:         { evidence: [declared] }
+  terraform:          { evidence: [declared] }
+  ci_cd:              { evidence: [declared] }
+  git:                { evidence: [declared] }
+  github:             { evidence: [declared] }
+  linux:              { evidence: [declared] }
+  python:             { evidence: [declared] }
+  java:               { evidence: [declared] }
+  csharp:             { evidence: [declared] }
+  rest_api:           { evidence: [declared] }
+  opentelemetry:      { evidence: [declared] }
+  observability:      { evidence: [declared] }
+  postgresql:         { evidence: [declared] }
+  mysql:              { evidence: [declared] }
+  genai:              { evidence: [declared] }
+  rag:                { evidence: [declared] }
+  mcp:                { evidence: [declared] }
+  cloud_architecture: { evidence: [academic, declared] }
+  devops:             { evidence: [academic, declared] }
+
+# Idiomas: TODO. Ex.: - { name: "Inglês", level: "intermediário" }
+# Enquanto vazio, exigências de inglês aparecem como GAP/RISK e o currículo não cita idiomas.
+languages: []
+
+# Preferências para responder formulários de candidatura (etapa 9).
+# O sistema NUNCA sugere valores: campo vazio = a resposta fica para você preencher.
+application_preferences:
+  salary:
+    clt_monthly: null      # TODO: ex. 6000 (R$ bruto/mês, CLT)
+    pj_monthly: null       # TODO: ex. 8000 (R$/mês, PJ)
+    note: ""               # ex.: "negociável conforme pacote de benefícios"
+  availability: ""         # TODO: ex. "imediata", "15 dias"
+  # Da sua definição inicial: São Paulo/SP, Remoto Brasil e Híbrido em São Paulo.
+  # Inclua "onsite" se aceitar presencial.
+  work_models: [remote, hybrid]
+  locations: ["São Paulo/SP"]
+  relocation: null         # TODO: true/false — aceita mudar de cidade?

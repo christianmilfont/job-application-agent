@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<p class="small">{% if job %}<a href="/jobs/{{ job.id }}">← {{ job.title }} ({{ job.company }})</a> · {% endif %}
+  <a href="/resumes/{{ rec.id }}/resume.pdf" target="_blank">PDF</a></p>
+<article class="card markdown">{{ html|safe }}</article>
+{% endblock %}

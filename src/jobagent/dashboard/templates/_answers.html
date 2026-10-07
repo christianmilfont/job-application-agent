@@ -1,0 +1,25 @@
+<div class="actions" style="justify-content:space-between">
+  <h2 style="margin:0">Respostas ({{ answers|length }})</h2>
+  <div class="actions">
+    <form hx-post="/jobs/{{ job.id }}/answers/suggest" hx-target="#answers" hx-disabled-elt="#answers button" hx-indicator="#sug-ind">
+      <input type="hidden" name="use_llm" value="1">
+      <button type="submit">{{ "Atualizar sugestões" if answers else "Gerar sugestões" }} ({{ model }})</button>
+    </form>
+    <form hx-post="/jobs/{{ job.id }}/answers/suggest" hx-target="#answers" hx-disabled-elt="#answers button" hx-indicator="#sug-ind">
+      <input type="hidden" name="use_llm" value="0"><button type="submit" class="secondary">sem LLM</button>
+    </form>
+  </div>
+</div>
+<p class="small muted">Suas versões revisadas nunca são sobrescritas ao atualizar sugestões.
+  <span id="sug-ind" class="htmx-indicator">gerando…</span></p>
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+{% for ans in answers %}{% include "_answer.html" %}{% else %}
+<p class="muted">Nenhuma resposta ainda. Gere as sugestões para começar.</p>
+{% endfor %}
+
+<form hx-post="/jobs/{{ job.id }}/answers/custom" hx-target="#answers" hx-disabled-elt="#answers button" class="actions" style="margin-top:14px">
+  <input name="question" placeholder="Outra pergunta do formulário (cole aqui)" style="flex:1; min-width:220px" required>
+  <input type="hidden" name="use_llm" value="1">
+  <button type="submit" class="secondary">Adicionar pergunta</button>
+</form>

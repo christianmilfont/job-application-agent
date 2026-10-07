@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Candidatura · {{ job.title }}{% endblock %}
+{% block content %}
+<p class="small"><a href="/jobs/{{ job.id }}">← {{ job.title }} ({{ job.company }})</a></p>
+
+<section class="card">
+  <h1>Revisar e aprovar candidatura</h1>
+  <div class="muted">{{ job.title }} · {{ job.company }} · {{ job.location or "—" }} · {{ job.modality }}
+    · <span class="score {{ band_class(job.score) }}">{{ job.score }}</span></div>
+  <ol class="small muted" style="margin:10px 0 0; padding-left:18px">
+    <li>Confira os riscos e o currículo.</li>
+    <li>Gere as respostas, edite e confirme cada uma (as sugestões só usam o seu profile.yaml).</li>
+    <li>Aprove. O sistema não envia nada: você abre o formulário e envia.</li>
+  </ol>
+</section>
+
+<div class="grid2">
+  <div>
+    <section class="card" id="answers">{% include "_answers.html" %}</section>
+  </div>
+  <div>
+    <section class="card" id="approval" hx-get="/jobs/{{ job.id }}/approval-panel" hx-trigger="checklistChanged from:body">
+      {% include "_approval.html" %}
+    </section>
+  </div>
+</div>
+{% endblock %}

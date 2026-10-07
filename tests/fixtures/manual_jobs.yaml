@@ -1,0 +1,26 @@
+# Exemplo de importação manual (ex.: vaga vista no LinkedIn e copiada por você).
+# Campos obrigatórios: company, title, url, description.
+# Opcionais: id, location, modality (REMOTE|HYBRID|ONSITE), posted_at, recruiter, apply_url, source.
+jobs:
+  - source: linkedin_manual
+    company: "Empresa Exemplo"
+    title: "Desenvolvedor Backend Python Júnior"
+    url: "https://www.linkedin.com/jobs/view/1234567890/?trk=public_jobs"
+    location: "São Paulo, SP"
+    modality: HYBRID
+    posted_at: 2026-10-01
+    recruiter: "Recrutadora Exemplo"
+    description: |
+      Sobre a vaga
+      Time de plataforma construindo APIs para o produto principal.
+
+      Requisitos:
+      - Python
+      - APIs REST
+      - PostgreSQL
+      - Git
+
+      Diferenciais:
+      - Docker
+      - Experiência com AWS
+      - FastAPI

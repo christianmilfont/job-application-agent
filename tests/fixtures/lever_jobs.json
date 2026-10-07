@@ -1,0 +1,41 @@
+[
+ {
+  "id": "abc-1",
+  "text": "Cloud Engineer Pleno",
+  "hostedUrl": "https://jobs.lever.co/beta/abc-1",
+  "applyUrl": "https://jobs.lever.co/beta/abc-1/apply",
+  "createdAt": 1790000000000,
+  "workplaceType": "remote",
+  "country": "BR",
+  "categories": {
+   "location": "Remoto",
+   "department": "Engineering",
+   "commitment": "CLT"
+  },
+  "description": "<div>Buscamos pessoa para atuar com nossa plataforma em nuvem.</div>",
+  "lists": [
+   {
+    "text": "Requisitos",
+    "content": "<li>Experiência com Azure e Terraform</li><li>Pelo menos 2 anos de experiência com infraestrutura</li><li>Inglês intermediário</li><li>Observabilidade com OpenTelemetry</li>"
+   },
+   {
+    "text": "Diferenciais",
+    "content": "<li>IA generativa e RAG</li><li>Kafka</li>"
+   }
+  ],
+  "additional": "<div>Benefícios: plano de saúde</div>"
+ },
+ {
+  "id": "abc-2",
+  "text": "Analista de Growth (Business Analytics) - Pleno",
+  "hostedUrl": "https://jobs.lever.co/beta/abc-2",
+  "createdAt": 1790000000000,
+  "workplaceType": "remote",
+  "categories": {
+   "location": "Remoto"
+  },
+  "description": "<div>SQL e Python para análises.</div>",
+  "lists": [],
+  "additional": ""
+ }
+]

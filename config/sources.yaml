@@ -1,0 +1,30 @@
+# Fontes de vagas. Somente APIs públicas oficiais de job boards (Greenhouse/Lever),
+# feitas para exibir vagas publicamente, + importação manual.
+# Cada board = 1 requisição por execução. Tokens verificados em 2026-10-06.
+#
+# Para achar o token de uma empresa: a URL da página de vagas dela, ex.
+#   https://job-boards.greenhouse.io/<token>   ou   https://jobs.lever.co/<token>
+
+greenhouse:
+  enabled: true
+  boards:
+    - { token: stone,           company: "Stone" }
+    - { token: quintoandar,     company: "QuintoAndar" }
+    - { token: c6bank,          company: "C6 Bank" }
+    - { token: xpinc,           company: "XP Inc." }
+    - { token: inter,           company: "Banco Inter" }
+    - { token: gympass,         company: "Wellhub (Gympass)" }
+    - { token: vtex,            company: "VTEX" }
+    - { token: ebanx,           company: "EBANX" }
+    - { token: wildlifestudios, company: "Wildlife Studios" }
+
+lever:
+  enabled: true
+  boards:
+    - { token: dlocal, company: "dLocal" }
+    - { token: neon,   company: "Neon" }
+
+# LinkedIn / Gupy / Indeed etc.: NÃO há coleta automática.
+# - LinkedIn proíbe scraping e automação nos termos de uso.
+# - Gupy não possui API pública documentada para busca de vagas.
+# Use `jobagent import arquivo.yaml` com vagas copiadas manualmente (ver tests/fixtures/manual_jobs.yaml).

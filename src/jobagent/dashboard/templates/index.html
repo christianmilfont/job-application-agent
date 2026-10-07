@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="counts" aria-label="Vagas por status">
+  <a href="/?{{ qs(status='', page=1) }}" class="{{ 'active' if not f.status }}">Todas<b>{{ counts.values()|sum }}</b></a>
+  {% for st in STATUSES if counts.get(st) %}
+  <a href="/?{{ qs(status=st, page=1) }}" class="{{ 'active' if f.status == st }}">{{ STATUS_LABELS[st] }}<b>{{ counts[st] }}</b></a>
+  {% endfor %}
+</nav>
+
+<section class="card">
+  <form class="filters" action="/" method="get"
+        hx-get="/" hx-target="#table" hx-push-url="true"
+        hx-trigger="change, keyup changed delay:400ms from:input[type=search]">
+    <label>Match mínimo
+      <select name="min_score">
+        {% for v, l in [("", "Qualquer"), ("90", "90+ excelente"), ("75", "75+ alta"), ("60", "60+ possível")] %}
+        <option value="{{ v }}" {{ 'selected' if f.min_score == v }}>{{ l }}</option>{% endfor %}
+      </select></label>
+    <label>Status
+      <select name="status"><option value="">Todos</option>
+        {% for st in STATUSES %}<option value="{{ st }}" {{ 'selected' if f.status == st }}>{{ STATUS_LABELS[st] }}</option>{% endfor %}
+      </select></label>
+    <label>Empresa
+      <input type="search" name="company" value="{{ f.company }}" list="companies" placeholder="ex.: XP">
+      <datalist id="companies">{% for c in companies %}<option value="{{ c }}">{% endfor %}</datalist></label>
+    <label>Cargo <input type="search" name="title" value="{{ f.title }}" placeholder="ex.: devops"></label>
+    <label>Localização <input type="search" name="location" value="{{ f.location }}" placeholder="ex.: São Paulo"></label>
+    <label>Modalidade
+      <select name="modality">
+        {% for v, l in [("", "Todas"), ("REMOTE", "Remoto"), ("HYBRID", "Híbrido"), ("ONSITE", "Presencial"), ("UNKNOWN", "Não informada")] %}
+        <option value="{{ v }}" {{ 'selected' if f.modality == v }}>{{ l }}</option>{% endfor %}
+      </select></label>
+    <label>Publicada
+      <select name="days">
+        {% for v, l in [("", "Qualquer data"), ("7", "Últimos 7 dias"), ("30", "Últimos 30 dias"), ("90", "Últimos 90 dias")] %}
+        <option value="{{ v }}" {{ 'selected' if f.days == v }}>{{ l }}</option>{% endfor %}
+      </select></label>
+    <label>Ordenar por
+      <select name="sort">
+        {% for v, l in [("score", "Match"), ("date", "Data de publicação"), ("company", "Empresa"), ("updated", "Atualização")] %}
+        <option value="{{ v }}" {{ 'selected' if f.sort == v }}>{{ l }}</option>{% endfor %}
+      </select></label>
+    <noscript><button type="submit">Filtrar</button></noscript>
+  </form>
+</section>
+
+<section class="card" id="table">{% include "_table.html" %}</section>
+{% endblock %}

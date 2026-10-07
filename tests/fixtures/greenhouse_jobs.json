@@ -1,0 +1,50 @@
+{
+ "jobs": [
+  {
+   "id": 1001,
+   "absolute_url": "https://job-boards.greenhouse.io/acme/jobs/1001?gh_src=abc",
+   "title": "Engenheiro(a) DevOps Júnior",
+   "company_name": "Acme",
+   "location": {
+    "name": "São Paulo, Brazil"
+   },
+   "first_published": "2026-09-30T10:00:00-03:00",
+   "updated_at": "2026-10-01T10:00:00-03:00",
+   "language": "pt",
+   "departments": [
+    {
+     "name": "Tecnologia"
+    }
+   ],
+   "content": "&lt;h3&gt;Sobre a vaga&lt;/h3&gt;&lt;p&gt;Modelo de trabalho híbrido, 2x por semana no escritório em São Paulo.&lt;/p&gt;\n&lt;h3&gt;O que você vai fazer&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Automatizar pipelines de CI/CD com GitHub Actions&lt;/li&gt;&lt;li&gt;Operar clusters Kubernetes na AWS&lt;/li&gt;&lt;/ul&gt;\n&lt;h3&gt;Requisitos&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Conhecimento em AWS ou Azure&lt;/li&gt;&lt;li&gt;Docker e Kubernetes&lt;/li&gt;&lt;li&gt;Terraform&lt;/li&gt;&lt;li&gt;Linux e Python&lt;/li&gt;&lt;li&gt;Graduação em TI ou áreas afins&lt;/li&gt;&lt;/ul&gt;\n&lt;h3&gt;Diferenciais&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Certificação AWS ou Azure (AZ-104)&lt;/li&gt;&lt;li&gt;Prometheus e Grafana&lt;/li&gt;&lt;li&gt;Go&lt;/li&gt;&lt;/ul&gt;\n&lt;h3&gt;Benefícios&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Vale refeição&lt;/li&gt;&lt;/ul&gt;"
+  },
+  {
+   "id": 1002,
+   "absolute_url": "https://job-boards.greenhouse.io/acme/jobs/1002",
+   "title": "Senior Site Reliability Engineer",
+   "company_name": "Acme",
+   "location": {
+    "name": "Remote - Brazil"
+   },
+   "first_published": "2026-09-20T10:00:00-03:00",
+   "updated_at": "2026-09-21T10:00:00-03:00",
+   "language": "en",
+   "departments": [],
+   "content": "&lt;p&gt;&lt;strong&gt;What you&#x27;ll need&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;5+ years of experience operating production systems&lt;/li&gt;&lt;li&gt;Kubernetes, Terraform and GCP&lt;/li&gt;&lt;li&gt;Datadog&lt;/li&gt;&lt;li&gt;Advanced English&lt;/li&gt;&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Nice to have&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Rust&lt;/li&gt;&lt;/ul&gt;"
+  },
+  {
+   "id": 1003,
+   "absolute_url": "https://job-boards.greenhouse.io/acme/jobs/1003",
+   "title": "Analista de Vendas",
+   "company_name": "Acme",
+   "location": {
+    "name": "São Paulo, Brazil"
+   },
+   "first_published": "2026-09-25T10:00:00-03:00",
+   "updated_at": "2026-09-25T10:00:00-03:00",
+   "language": "pt",
+   "departments": [],
+   "content": "&lt;p&gt;Vendas consultivas.&lt;/p&gt;"
+  }
+ ]
+}

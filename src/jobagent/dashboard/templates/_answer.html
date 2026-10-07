@@ -1,0 +1,33 @@
+<div class="answer" id="answer-{{ ans.id }}">
+  <div class="actions" style="justify-content:space-between">
+    <b>{{ ans.question }}</b>
+    <span>
+      <span class="pill" title="Origem da sugestão">{{ {"profile": "perfil", "template": "evidência do perfil", "llm": "Claude (validado)", "manual": "manual"}.get(ans.source, ans.source) }}</span>
+      {% if ans.reviewed %}<span class="pill src-ok">revisada ✓</span>{% else %}<span class="pill src-pending">pendente</span>{% endif %}
+    </span>
+  </div>
+  {% if ans.needs_input and not ans.final_text %}
+  <div class="error small">Depende de informação que só você tem. Escreva a resposta{% if ans.key in ("salary", "availability", "english") %} ou preencha <code>application_preferences</code>/<code>languages</code> no profile.yaml{% endif %}. O sistema não sugere valores.</div>
+  {% endif %}
+  <form hx-post="/answers/{{ ans.id }}" hx-target="#answer-{{ ans.id }}" hx-swap="outerHTML">
+    <textarea id="ans-text-{{ ans.id }}" name="text" rows="4">{{ ans.final_text or "" }}</textarea>
+    <div class="actions" style="margin-top:6px">
+      <button type="submit">{{ "Salvar" if ans.reviewed else "Confirmar resposta" }}</button>
+      <button type="button" class="secondary" data-copy="#ans-text-{{ ans.id }}">Copiar</button>
+      {% if ans.suggested and ans.suggested != (ans.final_text or "") %}
+      <button type="button" class="secondary" hx-post="/answers/{{ ans.id }}/use-suggestion" hx-target="#answer-{{ ans.id }}" hx-swap="outerHTML">Voltar à sugestão</button>
+      {% endif %}
+      {% if ans.key.startswith("custom:") %}
+      <button type="button" class="secondary" hx-post="/answers/{{ ans.id }}/delete" hx-target="#answers" hx-confirm="Remover esta pergunta?">Remover</button>
+      {% endif %}
+      {% if saved %}<span class="ok">Salva.</span>{% endif %}
+    </div>
+  </form>
+  {% if ans.warnings %}
+  <ul class="items small warn">{% for w in ans.warnings %}<li>⚠️ {{ w }}</li>{% endfor %}</ul>
+  <p class="small muted">Avisos não bloqueiam: confira se a frase é verdadeira para você.</p>
+  {% endif %}
+  {% if ans.suggested and ans.suggested != (ans.final_text or "") %}
+  <details class="small"><summary class="muted">Ver sugestão original</summary><p>{{ ans.suggested }}</p></details>
+  {% endif %}
+</div>

@@ -1,0 +1,93 @@
+# Pesos e regras do scoring. Soma dos pesos = 100. Ajuste sem tocar no código
+# e rode `jobagent rescore` para recalcular.
+
+weights:
+  required_skills: 35   # cobertura das tecnologias obrigatórias
+  desired_skills: 10    # cobertura das desejáveis (diferenciais)
+  role: 15              # cargo alinhado aos alvos
+  seniority: 15
+  location: 15          # localização + modalidade
+  credentials: 10       # formação + certificações relevantes
+
+# Fração do peso quando a vaga não lista desejáveis / obrigatórias identificáveis.
+neutral_desired_fraction: 0.6
+neutral_required_fraction: 0.5
+
+bands:
+  - { min: 90, label: "EXCELENTE" }
+  - { min: 75, label: "ALTA" }
+  - { min: 60, label: "POSSÍVEL" }
+  - { min: 0,  label: "NÃO PRIORIZAR" }
+
+# Cargo: termos (regex, case-insensitive) no título. O título é dividido em segmentos
+# ("Empresa | Cargo | Time"); termo forte no segmento principal = peso cheio,
+# só em segmento secundário (nome de time) = metade.
+role:
+  strong:   # cargos-alvo → peso cheio
+    - 'devops'
+    - '\bcloud\b'
+    - '\bsre\b'
+    - 'site reliability'
+    - 'platform'
+    - 'plataforma'
+    - 'infraestrutura'
+    - 'infrastructure'
+    - '\binfra\b'
+    - 'back[- ]?end'
+    - 'software engineer'
+    - 'engenheir[oa](\(a\))? de software|engenharia de software'
+    - 'desenvolvedor|desenvolvedora|\bdev\b'
+    - '\bdeveloper\b'
+    - '\bai engineer'
+    - 'genai|gen ai|generative ai|ia generativa'
+    - '\bllm'
+    - 'mlops'
+    - 'observabilidade|observability'
+    - 'kubernetes'
+  partial:  # relacionados → metade do peso
+    - 'engineer|engenheir[oa]'
+    - 'full[- ]?stack'
+    - 'programador'
+    - 'analista de sistemas'
+    - 'analista de (ti|tecnologia)'
+    - 'data engineer|engenheir[oa] de dados'
+    - 'machine learning|\bml\b'
+    - '\bIA\b|\bAI\b'
+    - 'arquitet'
+    - 'architect'
+  negative: # vence sempre: fora do alvo mesmo que o título cite cloud/plataforma
+    - 'vendas|sales|comercial|marketing|salesforce|\bcrm\b|recruit|recrutador|jurídico|juridico|financeiro|contábil'
+    - 'design|customer success|atendimento|growth|business analytics|\baccount|copywriter|go-to-market'
+    - 'product manager|product owner|gerente de produto|\bios\b|android|mobile|front[- ]?end|\bux\b'
+
+seniority_points:   # fração do peso
+  intern: 0.25      # estágio normalmente exige matrícula ativa em graduação
+  trainee: 0.85
+  junior: 1.0
+  pleno: 0.75
+  unspecified: 0.7
+  senior: 0.0
+  lead: 0.0         # especialista, staff, principal, lead, coordenação, gerência
+
+location_points:    # fração do peso
+  remote_brazil: 1.0
+  hybrid_sp: 1.0
+  onsite_sp: 0.75
+  unknown_modality_sp: 0.8
+  remote_latam: 0.6
+  hybrid_or_onsite_other_br: 0.2
+  remote_abroad: 0.25
+  abroad_onsite: 0.0
+  unknown: 0.5
+
+penalties:
+  seniority_senior: 20       # além de zerar o critério: Sênior não deve parecer "possível"
+  seniority_lead: 30
+  years_required_high: 10    # exige >= 3 anos de experiência
+  years_required_mid: 4      # exige 2 anos
+  english_required_unknown: 3
+
+# Filtro de descoberta: vagas abaixo disso nem são salvas (economiza ruído).
+discovery:
+  keep_if_role_match: true          # título com termo strong ou partial (e sem negative)
+  drop_locations_abroad_onsite: true

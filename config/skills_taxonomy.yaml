@@ -1,0 +1,131 @@
+# Taxonomia de tecnologias usada pelo parser e pelo scorer.
+# aliases: termos literais, case-insensitive, com fronteira de palavra.
+# regex:   expressões regulares case-SENSITIVE (para termos ambíguos como "Go").
+# synonyms: true = os aliases são só grafias do mesmo conceito ("cloud pública" = cloud). Sem a flag,
+#           aliases podem ser produtos distintos (AWS: EC2, S3...) e o currículo só pode usar o termo
+#           se ele aparecer no profile.yaml.
+# implied_by: a skill é considerada atendida se o perfil tiver uma destas
+#             (ex.: vaga pede "SQL" e o perfil tem PostgreSQL). O relatório mostra "via X".
+
+skills:
+  # --- Cloud
+  aws:            { name: AWS, aliases: [aws, amazon web services, ec2, s3, eks, ecs, ecr, rds, aws lambda, cloudwatch, iam aws] }
+  azure:          { name: Azure, aliases: [azure, microsoft azure, aks, azure functions, entra id] }
+  gcp:            { name: GCP, aliases: [gcp, google cloud, google cloud platform, gke, bigquery, cloud run] }
+  oci:            { name: Oracle Cloud, aliases: [oci, oracle cloud] }
+  cloud:          { name: Cloud Computing, aliases: [cloud computing, computação em nuvem, nuvem, cloud pública, public cloud], implied_by: [aws, azure, gcp], synonyms: true }
+  cloud_architecture: { name: Arquitetura Cloud, aliases: [arquitetura cloud, arquitetura de nuvem, cloud architecture, arquitetura em nuvem, well-architected], synonyms: true }
+  serverless:     { name: Serverless, aliases: [serverless, aws lambda, azure functions, cloud functions] }
+  networking:     { name: Redes (VPC/DNS/TCP-IP), aliases: [vpc, tcp/ip, dns, load balancer, balanceamento de carga, redes de computadores, networking] }
+
+  # --- Containers / IaC / CI-CD
+  docker:         { name: Docker, aliases: [docker, dockerfile, docker compose, docker-compose] }
+  containers:     { name: Containers, aliases: [containers, contêineres, conteineres, containerização], implied_by: [docker, kubernetes], synonyms: true }
+  kubernetes:     { name: Kubernetes, aliases: [kubernetes, k8s, eks, aks, gke, openshift] }
+  helm:           { name: Helm, aliases: [helm, helm charts] }
+  istio:          { name: Service Mesh (Istio), aliases: [istio, service mesh, linkerd] }
+  progressive_delivery: { name: Deploy Canary / Progressive Delivery, aliases: [canary, deploy canário, blue-green, blue/green, progressive delivery] }
+  feature_flags:  { name: Feature Flags, aliases: [feature flags, feature flag, feature toggles, feature toggle], synonyms: true }
+  terraform:      { name: Terraform, aliases: [terraform, terragrunt, opentofu] }
+  iac:            { name: Infraestrutura como Código, aliases: [iac, infrastructure as code, infraestrutura como código, infraestrutura como codigo], implied_by: [terraform], synonyms: true }
+  pulumi:         { name: Pulumi, aliases: [pulumi] }
+  cloudformation: { name: CloudFormation, aliases: [cloudformation, aws cdk] }
+  ansible:        { name: Ansible, aliases: [ansible] }
+  ci_cd:          { name: CI/CD, aliases: [ci/cd, ci-cd, ci cd, continuous integration, continuous delivery, continuous deployment, integração contínua, entrega contínua, pipelines de deploy, pipeline de ci], synonyms: true }
+  github_actions: { name: GitHub Actions, aliases: [github actions] }
+  gitlab_ci:      { name: GitLab CI, aliases: [gitlab ci, gitlab-ci, gitlab] }
+  jenkins:        { name: Jenkins, aliases: [jenkins] }
+  azure_devops:   { name: Azure DevOps, aliases: [azure devops, azure pipelines] }
+  argocd:         { name: ArgoCD / GitOps, aliases: [argocd, argo cd, gitops, flux cd, fluxcd] }
+  git:            { name: Git, aliases: [git, versionamento de código, controle de versão] }
+  github:         { name: GitHub, aliases: [github] }
+  linux:          { name: Linux, aliases: [linux, ubuntu, debian, rhel, red hat, centos] }
+  bash:           { name: Shell Script, aliases: [bash, shell script, shell scripting, scripts shell] }
+
+  # --- Linguagens / frameworks
+  python:         { name: Python, aliases: [python], implied_by: [flask, fastapi, django] }
+  java:           { name: Java, aliases: [java], implied_by: [spring, spring_ai] }
+  csharp:         { name: C#, aliases: ["c#", csharp], implied_by: [dotnet] }
+  dotnet:         { name: .NET, aliases: [.net, dotnet, .net core, asp.net] }
+  go:             { name: Go, aliases: [golang], regex: ['\bGo\b(?!\s+to\b)'] }
+  javascript:     { name: JavaScript, aliases: [javascript] }
+  typescript:     { name: TypeScript, aliases: [typescript] }
+  nodejs:         { name: Node.js, aliases: [node.js, nodejs, node js] }
+  react:          { name: React, aliases: [react, react.js, reactjs] }
+  kotlin:         { name: Kotlin, aliases: [kotlin] }
+  scala:          { name: Scala, aliases: [scala] }
+  rust:           { name: Rust, aliases: [rust] }
+  php:            { name: PHP, aliases: [php, laravel] }
+  ruby:           { name: Ruby, aliases: [ruby, rails, ruby on rails] }
+  spring:         { name: Spring Boot, aliases: [spring boot, spring framework] }
+  spring_ai:      { name: Spring AI, aliases: [spring ai, chatclient] }
+  expo:           { name: Expo / React Native, aliases: [expo, react native] }
+  leaflet:        { name: Leaflet (mapas), aliases: [leaflet] }
+  geolocation:    { name: Geolocalização, aliases: [haversine, geolocalização, geolocation, geoespacial, geospatial], synonyms: true }
+  jwt:            { name: JWT / Autenticação, aliases: [jwt, json web token, oauth2, oauth 2.0, openid connect] }
+  fastapi:        { name: FastAPI, aliases: [fastapi] }
+  django:         { name: Django, aliases: [django] }
+  flask:          { name: Flask, aliases: [flask] }
+
+  # --- APIs / arquitetura
+  rest_api:       { name: APIs REST / Web Services, aliases: [restful, api rest, apis rest, rest api, web services, webservices, web service, apis], synonyms: true }
+  graphql:        { name: GraphQL, aliases: [graphql] }
+  grpc:           { name: gRPC, aliases: [grpc] }
+  microservices:  { name: Microsserviços, aliases: [microservices, microsserviços, microserviços, micro serviços, microsservicos], synonyms: true }
+  messaging:      { name: Mensageria (Kafka/RabbitMQ/SQS), aliases: [kafka, rabbitmq, sqs, sns, pub/sub, mensageria, event-driven, event driven] }
+
+  # --- Dados
+  sql:            { name: SQL, aliases: [sql], implied_by: [postgresql, mysql], synonyms: true }
+  postgresql:     { name: PostgreSQL, aliases: [postgresql, postgres] }
+  mysql:          { name: MySQL, aliases: [mysql, mariadb] }
+  h2:             { name: H2, aliases: [h2] }
+  sql_server:     { name: SQL Server, aliases: [sql server, mssql] }
+  oracle_db:      { name: Oracle DB, aliases: [oracle database, pl/sql, oracle db] }
+  mongodb:        { name: MongoDB, aliases: [mongodb, mongo] }
+  redis:          { name: Redis, aliases: [redis] }
+  nosql:          { name: NoSQL (DynamoDB/Cosmos DB/Cassandra), aliases: [nosql, dynamodb, cassandra, cosmos db, cosmosdb] }
+  elasticsearch:  { name: Elasticsearch, aliases: [elasticsearch, opensearch, elk, elastic stack] }
+  spark:          { name: Spark / Big Data, aliases: [spark, pyspark, databricks, hadoop] }
+  airflow:        { name: Airflow, aliases: [airflow] }
+
+  # --- Observabilidade / SRE
+  observability:  { name: Observabilidade, aliases: [observabilidade, observability, monitoramento, monitoring, telemetria, telemetry], implied_by: [opentelemetry, dynatrace, jaeger, azure_monitor], synonyms: true }
+  opentelemetry:  { name: OpenTelemetry, aliases: [opentelemetry, open telemetry, otel] }
+  jaeger:         { name: Jaeger (tracing), aliases: [jaeger, distributed tracing, tracing distribuído, rastreamento distribuído] }
+  azure_monitor:  { name: Azure Monitor / Application Insights, aliases: [application insights, app insights, azure monitor] }
+  prometheus:     { name: Prometheus, aliases: [prometheus] }
+  grafana:        { name: Grafana, aliases: [grafana] }
+  datadog:        { name: Datadog, aliases: [datadog] }
+  dynatrace:      { name: Dynatrace, aliases: [dynatrace] }
+  new_relic:      { name: New Relic, aliases: [new relic, newrelic] }
+  sre:            { name: SRE, aliases: [sre, site reliability, slo, slos, sli, slis, error budget] }
+  devops:         { name: DevOps, aliases: [devops, dev ops, cultura devops], synonyms: true }
+  devsecops:      { name: DevSecOps / Segurança, aliases: [devsecops, sast, dast, owasp, segurança da informação, appsec, segurança da infraestrutura], implied_by: [checkov, kyverno] }
+  checkov:        { name: Checkov (IaC security), aliases: [checkov] }
+  kyverno:        { name: Kyverno (policy as code), aliases: [kyverno, policy as code, opa gatekeeper] }
+  finops:         { name: FinOps, aliases: [finops, otimização de custos em cloud] }
+  agile:          { name: Metodologias Ágeis, aliases: [scrum, kanban, agile, metodologias ágeis, métodos ágeis] }
+
+  # --- IA
+  genai:          { name: IA Generativa, aliases: [genai, gen ai, generative ai, ia generativa, inteligência artificial generativa, llm, llms, large language models, modelos de linguagem], implied_by: [spring_ai, rag, mcp, fine_tuning], synonyms: true }
+  fine_tuning:    { name: Fine-tuning de modelos, aliases: [fine-tuning, fine tuning, finetuning, ajuste fino], synonyms: true }
+  ai_assistants:  { name: Assistentes de IA, aliases: [assistente de ia, assistentes de ia, ai assistant, ai assistants], synonyms: true }
+  voice_ai:       { name: Interfaces por Voz, aliases: [interface por voz, interação por voz, voice interface, speech-to-text, text-to-speech, reconhecimento de voz, voice assistant] }
+  automation:     { name: Automação de Tarefas, aliases: [automação de tarefas, task automation, rpa, automação de processos] }
+  whatsapp:       { name: WhatsApp API, aliases: [whatsapp] }
+  llm_platforms:  { name: Plataformas de LLM (OpenAI/Bedrock/Vertex), aliases: [openai, azure openai, bedrock, amazon bedrock, vertex ai, gemini, anthropic, claude] }
+  rag:            { name: RAG, aliases: [rag, retrieval augmented generation, retrieval-augmented generation, vector database, banco vetorial, embeddings], synonyms: true }
+  mcp:            { name: MCP (Model Context Protocol), aliases: [mcp, model context protocol], synonyms: true }
+  ai_agents:      { name: Agentes de IA, aliases: [agentes de ia, ai agents, agentic, langgraph, crewai] }
+  langchain:      { name: LangChain / LlamaIndex, aliases: [langchain, llamaindex, llama index] }
+  machine_learning: { name: Machine Learning, aliases: [machine learning, aprendizado de máquina, ml models, scikit-learn, tensorflow, pytorch] }
+  mlops:          { name: MLOps, aliases: [mlops, ml ops, mlflow, kubeflow, sagemaker] }
+
+# Certificações que podem aparecer em vagas. satisfied_by = IDs de certifications do profile.yaml.
+certifications:
+  azure_cert:  { name: Certificação Azure, aliases: [az-104, az-900, az-305, az-400, azure certification, certificação azure, certificações azure], satisfied_by: [az_104] }
+  gcp_cert:    { name: Certificação Google Cloud, aliases: [google cloud certified, certificação gcp, certificação google cloud, generative ai leader], satisfied_by: [gcp_genai_leader] }
+  aws_cert:    { name: Certificação AWS, aliases: [aws certified, certificação aws, certificações aws, solutions architect associate, aws cloud practitioner], satisfied_by: [] }
+  k8s_cert:    { name: Certificação Kubernetes (CKA/CKAD), aliases: [cka, ckad, cks], satisfied_by: [] }
+  tf_cert:     { name: Terraform Associate, aliases: [terraform associate], satisfied_by: [] }
+  generic_cloud_cert: { name: Certificação em Cloud, aliases: [certificação em cloud, certificações em cloud, cloud certification, cloud certifications], satisfied_by: [az_104, gcp_genai_leader] }

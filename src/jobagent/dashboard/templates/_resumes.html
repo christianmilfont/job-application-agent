@@ -1,0 +1,32 @@
+<h2>Currículo</h2>
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+<div class="actions">
+  <form hx-post="/jobs/{{ job.id }}/resume" hx-target="#resumes" hx-disabled-elt="#resumes button" hx-indicator="#gen-ind">
+    <input type="hidden" name="use_llm" value="1"><button type="submit">Gerar com {{ model }}</button>
+  </form>
+  <form hx-post="/jobs/{{ job.id }}/resume" hx-target="#resumes" hx-disabled-elt="#resumes button" hx-indicator="#gen-ind">
+    <input type="hidden" name="use_llm" value="0"><button type="submit" class="secondary">Gerar sem LLM</button>
+  </form>
+  <span id="gen-ind" class="htmx-indicator small muted">gerando… (com LLM pode levar até 1 min)</span>
+</div>
+{% if resumes %}
+<table class="kv" style="margin-top:12px">
+  {% for r in resumes %}
+  <tr>
+    <td>
+      <b>ATS {{ r.ats_score }}%</b> · {{ "LLM" if r.generator == "llm" else "sem LLM" }}{% if r.model %} ({{ r.model }}){% endif %}
+      <div class="small muted">{{ r.created_at.strftime("%d/%m/%Y %H:%M") }}{% if r.meta and r.meta.get("fallback_reason") %} · {{ r.meta.fallback_reason }}{% endif %}
+        {% if not r.validation_ok %} · <span style="color:var(--risk)">validação reprovada</span>{% endif %}</div>
+      <div class="small">
+        <a href="/resumes/{{ r.id }}/resume.pdf" target="_blank">PDF</a> ·
+        <a href="/resumes/{{ r.id }}/analysis.md">análise e ATS</a> ·
+        <a href="/resumes/{{ r.id }}/resume.md">markdown</a> ·
+        <a href="/resumes/{{ r.id }}/application.json" target="_blank">json</a>
+      </div>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="small muted" style="margin-top:10px">Nenhum currículo gerado para esta vaga.</p>
+{% endif %}

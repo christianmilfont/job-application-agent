@@ -1,0 +1,37 @@
+<p class="muted small">{{ total }} vaga(s){% if pages > 1 %} · página {{ page }} de {{ pages }}{% endif %}</p>
+{% if jobs %}
+<div class="table-wrap">
+<table class="jobs">
+  <thead><tr>
+    <th>Vaga</th><th>Empresa</th><th>Match</th><th>Status</th><th>Currículo</th><th>Link</th>
+  </tr></thead>
+  <tbody>
+  {% for j in jobs %}{% set r = resumes.get(j.id) %}
+  <tr>
+    <td class="title">
+      <a href="/jobs/{{ j.id }}">{{ j.title }}</a>
+      <div class="muted small">{{ j.location or "—" }} · {{ j.modality or "—" }} · {{ j.seniority or "—" }}
+        · {{ j.posted_at.strftime("%d/%m/%Y") if j.posted_at else "sem data" }}</div>
+    </td>
+    <td>{{ j.company }}</td>
+    <td><span class="score {{ band_class(j.score) }}" title="{{ j.score_band }}">{{ j.score if j.score is not none else "—" }}</span></td>
+    <td><span class="status s-{{ j.status }}">{{ STATUS_LABELS.get(j.status, j.status) }}</span></td>
+    <td>{% if r %}
+      <a href="/resumes/{{ r.id }}/resume.pdf" target="_blank">PDF</a>
+      · <a href="/resumes/{{ r.id }}/analysis.md">ATS {{ r.ats_score }}%</a>
+      {% else %}<span class="muted">—</span>{% endif %}</td>
+    <td><a href="{{ j.url }}" target="_blank" rel="noopener noreferrer" title="Abrir vaga original">abrir ↗</a></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% if pages > 1 %}
+<div class="pager">
+  {% if page > 1 %}<a href="/?{{ qs(page=page-1) }}" hx-get="/?{{ qs(page=page-1) }}" hx-target="#table" hx-push-url="true">← anterior</a>{% endif %}
+  {% if page < pages %}<a href="/?{{ qs(page=page+1) }}" hx-get="/?{{ qs(page=page+1) }}" hx-target="#table" hx-push-url="true">próxima →</a>{% endif %}
+</div>
+{% endif %}
+{% else %}
+<p>Nenhuma vaga com esses filtros. Rode <code>jobagent discover</code> ou ajuste os filtros.</p>
+{% endif %}

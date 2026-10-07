@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Vagas{% endblock %} · Job Agent</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/htmx.min.js"></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">Job Application Agent</a>
+    <span class="spacer"></span>
+    <span class="pill mode-{{ mode }}" title="Modo de operação (JOBAGENT_MODE)">{{ mode }}</span>
+    <span class="pill" title="Modelo usado na geração de currículo">{{ model }}</span>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+</body>
+</html>

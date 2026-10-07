@@ -1,0 +1,17 @@
+<h2>Status</h2>
+<p><span class="status s-{{ job.status }}">{{ STATUS_LABELS.get(job.status, job.status) }}</span></p>
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+<form hx-post="/jobs/{{ job.id }}/status" hx-target="#status-panel" class="actions">
+  <select name="status" aria-label="Novo status">
+    {% for st in STATUSES %}<option value="{{ st }}" {{ 'selected' if job.status == st }}>{{ STATUS_LABELS[st] }}</option>{% endfor %}
+  </select>
+  <input name="note" placeholder="nota (opcional)" style="flex:1; min-width:120px">
+  <button type="submit">Atualizar</button>
+</form>
+<p class="small muted" style="margin:8px 0 0">"Candidatura enviada" é só um registro: o sistema não envia candidaturas.</p>
+<ul class="history">
+  {% for h in history %}
+  <li><b>{{ STATUS_LABELS.get(h.to_status, h.to_status) }}</b>
+    <span class="muted">· {{ h.at.strftime("%d/%m/%Y %H:%M") }}{% if h.note %} · {{ h.note }}{% endif %}</span></li>
+  {% endfor %}
+</ul>
